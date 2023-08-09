@@ -1,0 +1,198 @@
+﻿<Window x:Class="SL_DeskTop.Lab"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ni="http://schemas.ni.com/controls/2009/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SL_DeskTop"
+        mc:Ignorable="d"
+        Title="Graph" WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen" FontFamily="Arial Narrow" FontSize="16">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="FUNCTION GENERATOR"  Grid.ColumnSpan="5" Grid.RowSpan="6" Padding="10" >
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="2">
+                    <RadioButton GroupName="wavetype" Checked="WaveType_Checked" Content="Sine" />
+                    <RadioButton GroupName="wavetype" Checked="WaveType_Checked" Content="Square"  />
+                    <RadioButton GroupName="wavetype" Checked="WaveType_Checked" Content="Triangle" IsChecked="True"/>
+                </StackPanel>
+                <ni:KnobDouble x:Name="KnobFrequency" Grid.Column="2"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="1" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Stretch" Range="0, 5000, System.Double" Interval="1" ValueChanged="KnobFrequency_ValueChanged" CoercionMode="None" />
+                <ni:KnobDouble x:Name="KnobAmplitude" Grid.Column="5" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="1" ValueChanged="KnobAmplitude_ValueChanged"/>
+                <ni:NumericTextBoxDouble  x:Name="nmbFrequency" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="4" Margin="5" Range="0, 5000, System.Double" Value="100.00" ValueChanged="nmbFrequency_ValueChanged" CoercionMode="None"/>
+                <ni:NumericTextBoxDouble x:Name="nmbAmplitude" Grid.ColumnSpan="2" Grid.Column="5" Grid.Row="4" Margin="5" Range="0, Infinity, System.Double" Value="1.00" ValueChanged="nmbAmplitude_ValueChanged"/>
+                <Label Content="Wave" Margin="5,0,0,0" Grid.ColumnSpan="2" Width="46"/>
+                <Label Content="Frequency" Grid.ColumnSpan="3" Grid.Column="2"/>
+                <Label Content="Amplitude " Margin="0" Grid.ColumnSpan="3" Grid.Column="5"/>
+                <Label Content="Hz" Grid.Column="4" Grid.Row="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Content="Vpp" Grid.Column="7" Grid.Row="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left"/>
+                <Button x:Name="btnStartGen" Content="Start" Grid.Column="2"  Grid.Row="6" Click="btnStartGen_Click" />
+                <Button x:Name="btnStopGen" Content="Stop" Grid.Column="4"  Grid.Row="6" Click="btnStopGen_Click" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="OSCILLOSCOPE"  Grid.ColumnSpan="9" Grid.Column="5" Grid.RowSpan="12" Margin="5" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ni:Graph x:Name="waveGraph" Grid.RowSpan="3" Grid.ColumnSpan="6">
+                    <ni:Graph.Axes>
+                        <ni:AxisDouble x:Name="vAxis" Orientation="Vertical" Range="-5, 5" Adjuster="PagedChart"/>
+                        <ni:AxisDouble x:Name="hAxis" Orientation="Horizontal" Adjuster="PagedChart"  Range="0, 500"/>
+                    </ni:Graph.Axes>
+                    <ni:Graph.Plots>
+                        <ni:Plot x:Name="voltagePlot" Label="Plot 1">
+                            <ni:LinePlotRenderer Stroke="Purple" />
+                        </ni:Plot>
+                    </ni:Graph.Plots>
+                </ni:Graph>
+
+                <Button x:Name="btnStart" Content="Start" Grid.Row="5" Margin="26,22.333,25.333,15" IsEnabled="False" Click="btnStart_Click" Grid.ColumnSpan="2"/>
+                <Button x:Name="btnStop"  Content="Stop" Grid.Column="3" Grid.Row="5" Margin="62.667,26.333,69.333,15" IsEnabled="False" Click="btnStop_Click" Grid.ColumnSpan="3"/>
+
+                <GroupBox Grid.ColumnSpan="3" Header="Channel 0" Grid.Row="3" Grid.RowSpan="2"  Background="#FFE8E6E6" Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ComboBox x:Name="cmbChannels" Grid.Row="1" Grid.ColumnSpan="6" Margin="5"/>
+
+
+                        <ni:KnobDouble x:Name="knobVertical"  Margin="5" Grid.ColumnSpan="3" 
+                               Grid.RowSpan="3" Grid.Row="2" IsEnabled="False" 
+                               ValueChanged="knobVertical_ValueChanged" />
+
+
+                        <ni:KnobDouble x:Name="knobHorizontal" Margin="5" Grid.Column="3"  Grid.ColumnSpan="3" 
+                               Grid.Row="2" IsEnabled="False" ValueChanged="knobHorizontal_ValueChanged" 
+                               Value="50" Grid.RowSpan="3" InteractionMode="ArrowKeys, Drag, ScrollWheel, EditRange" Range="0, 500, System.Double"/>
+
+
+
+                        <ComboBox Grid.Row="5" Grid.ColumnSpan="3" Margin="3"/>
+                        <ComboBox Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Margin="3"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.ColumnSpan="3" Grid.Column="3" Header="Channel 1" Grid.Row="3" Grid.RowSpan="2"  
+                  Background="#FFE8E6E6" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ComboBox x:Name="cmbChannels1" Grid.Row="1" Grid.ColumnSpan="6" Margin="5"/>
+
+
+                        <ni:KnobDouble x:Name="knobVertical1"  Margin="5" Grid.ColumnSpan="3" 
+                    Grid.RowSpan="3" Grid.Row="2" IsEnabled="False" 
+                    ValueChanged="knobVertical_ValueChanged" />
+
+
+                        <ni:KnobDouble x:Name="knobHorizontal1" Margin="5" Grid.Column="3"  Grid.ColumnSpan="3" 
+                    Grid.Row="2" IsEnabled="False" ValueChanged="knobHorizontal_ValueChanged" 
+                    Value="50" Grid.RowSpan="3" InteractionMode="ArrowKeys, Drag, ScrollWheel, EditRange"/>
+
+
+
+                        <ComboBox Grid.Row="5" Grid.ColumnSpan="3" Margin="3"/>
+                        <ComboBox Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Margin="3"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+        <Label Grid.ColumnSpan="4" Grid.Row="5"  Grid.Column="1" x:Name="lblstatus"/>
+        <Label Grid.ColumnSpan="4" Grid.Row="7"  Grid.Column="1" x:Name="lblo" Background="Aqua"/>
+    </Grid>
+</Window>
