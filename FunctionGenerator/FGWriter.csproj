@@ -46,8 +46,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AOReader.cs" />
+    <Compile Include="Classes\BufferWaves.cs" />
     <Compile Include="Classes\FunctionGenerator.cs" />
     <Compile Include="Classes\Writer.cs" />
     <Compile Include="Program.cs" />

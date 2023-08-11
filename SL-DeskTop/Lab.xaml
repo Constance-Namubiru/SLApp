@@ -64,9 +64,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="2">
-                    <RadioButton GroupName="wavetype" Checked="WaveType_Checked" Content="Sine" />
+                    <RadioButton GroupName="wavetype" Checked="WaveType_Checked" Content="Sine" IsChecked="True"/>
                     <RadioButton GroupName="wavetype" Checked="WaveType_Checked" Content="Square"  />
-                    <RadioButton GroupName="wavetype" Checked="WaveType_Checked" Content="Triangle" IsChecked="True"/>
+                    <RadioButton GroupName="wavetype" Checked="WaveType_Checked" Content="Triangle" />
                 </StackPanel>
                 <ni:KnobDouble x:Name="KnobFrequency" Grid.Column="2"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="1" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Stretch" Range="0, 5000, System.Double" Interval="1" ValueChanged="KnobFrequency_ValueChanged" CoercionMode="None" />
                 <ni:KnobDouble x:Name="KnobAmplitude" Grid.Column="5" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="1" ValueChanged="KnobAmplitude_ValueChanged"/>
@@ -103,7 +103,7 @@
                 <ni:Graph x:Name="waveGraph" Grid.RowSpan="3" Grid.ColumnSpan="6">
                     <ni:Graph.Axes>
                         <ni:AxisDouble x:Name="vAxis" Orientation="Vertical" Range="-5, 5" Adjuster="PagedChart"/>
-                        <ni:AxisDouble x:Name="hAxis" Orientation="Horizontal" Adjuster="PagedChart"  Range="0, 500"/>
+                        <ni:AxisDouble x:Name="hAxis" Orientation="Horizontal" Adjuster="PagedChart"  Range="0, 50"/>
                     </ni:Graph.Axes>
                     <ni:Graph.Plots>
                         <ni:Plot x:Name="voltagePlot" Label="Plot 1">

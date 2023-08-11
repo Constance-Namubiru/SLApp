@@ -8,27 +8,27 @@ namespace FGWriter.Classes
     class Writer
     {
         Task fGenTask;
-        Thread workerthread;
-        NetworkVariableBufferedWriter<double[]> bufferedWriter;
-        string variablelacation = @"\\localhost\system\wavearray";
 
+        AOReader reader;
+     
 
         public Writer()
         {
-            bufferedWriter = new NetworkVariableBufferedWriter<double[]>(variablelacation);
-            bufferedWriter.Connect();
-        
-        
+            reader = new AOReader();
+            
         }
-        public void Write(string frequency,string wavetype,string amplitude)
+
+       
+        public void Write(string frequency, string wavetype, string amplitude)
         {
+
 
             try
             {
-               
+
                 // create the task and channel
                 fGenTask = new Task();
-                fGenTask.AOChannels.CreateVoltageChannel("Dev2/ao0",
+                fGenTask.AOChannels.CreateVoltageChannel("Dev1/ao0",
                     "",
                     Convert.ToDouble(-10),
                     Convert.ToDouble(10),
@@ -58,15 +58,12 @@ namespace FGWriter.Classes
                     new AnalogSingleChannelWriter(fGenTask.Stream);
 
                 //write data to buffer
+                writer.WriteMultiSample(false, fGen.Data);
 
-                double[] data = fGen.Data;
-               
-                bufferedWriter.WriteValue(data);
-                writer.WriteMultiSample(false, data);
                 //start writing out data
                 fGenTask.Start();
+                reader.StartWaveTask();
 
-              
             }
             catch (DaqException err)
             {
@@ -75,9 +72,16 @@ namespace FGWriter.Classes
                 fGenTask.Dispose();
             }
 
-
-            
+           
 
         }
+
+
+
+    
+
+
+      
+
     }
 }

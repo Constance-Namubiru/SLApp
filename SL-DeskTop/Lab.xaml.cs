@@ -55,6 +55,7 @@ namespace SL_DeskTop
             if (e.Data.HasValue)
             {
                 double[] data = e.Data.GetValue();
+               
                 waveGraph.DataSource = data;
 
                
@@ -167,8 +168,11 @@ namespace SL_DeskTop
 
         private void btnStartGen_Click(object sender, RoutedEventArgs e)
         {
-            string[] data = new string[] {KnobFrequency.Value.ToString(),
-            wavetype,(KnobAmplitude.Value/2).ToString()};
+            string[] data = new string[] {
+                KnobFrequency.Value.ToString(),
+                wavetype,
+                (KnobAmplitude.Value/2).ToString()};
+
             fGenParamsWriter.WriteData(new NetworkVariableData<string[]>(data));
 
             btnStopGen.IsEnabled = true;

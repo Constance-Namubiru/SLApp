@@ -13,7 +13,7 @@ namespace FGWriter
             var subscriber = new Subscriber();
             subscriber.Connect();
 
-           Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

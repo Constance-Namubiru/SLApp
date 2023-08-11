@@ -9,8 +9,7 @@ namespace FGWriter.Classes
     {
         private NetworkVariableSubscriber<string[]> subscriber;
         private string variablelocation = @"\\localhost\system\fgenparams";
-
-        Writer writer;
+          Writer writer;
         public Subscriber()
         {
             writer = new Writer();

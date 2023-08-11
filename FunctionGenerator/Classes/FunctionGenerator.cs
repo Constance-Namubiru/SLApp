@@ -25,7 +25,8 @@ namespace FGWriter.Classes
                 string samplesPerBuffer,
                 string cyclesPerBuffer,
                 string type,
-                string amplitude)
+                string amplitude,
+                int phase = 0)
             {
 
            
@@ -47,7 +48,8 @@ namespace FGWriter.Classes
                     Double.Parse(samplesPerBuffer),
                     Double.Parse(cyclesPerBuffer),
                     t,
-                    Double.Parse(amplitude));
+                    Double.Parse(amplitude),
+                    phase);
             }
 
             public FunctionGenerator(
@@ -56,7 +58,8 @@ namespace FGWriter.Classes
                 double samplesPerBuffer,
                 double cyclesPerBuffer,
                 WaveformType type,
-                double amplitude)
+                double amplitude,
+                int phase = 0)
             {
                 Init(
                     timingSubobject,
@@ -64,7 +67,8 @@ namespace FGWriter.Classes
                     samplesPerBuffer,
                     cyclesPerBuffer,
                     type,
-                    amplitude);
+                    amplitude,
+                    phase);
             }
 
             private void Init(
@@ -73,7 +77,8 @@ namespace FGWriter.Classes
                 double samplesPerBuffer,
                 double cyclesPerBuffer,
                 WaveformType type,
-                double amplitude)
+                double amplitude,
+                int phase)
             {
                 if (desiredFrequency <= 0)
                     throw new ArgumentOutOfRangeException("desiredFrequency", desiredFrequency, "This parameter must be a positive number");
@@ -98,7 +103,7 @@ namespace FGWriter.Classes
                 switch (type)
                 {
                     case WaveformType.SineWave:
-                        _data = GenerateSineWave(_resultingFrequency, amplitude, _resultingSampleClockRate, samplesPerBuffer);
+                        _data = GenerateSineWave(_resultingFrequency, amplitude, _resultingSampleClockRate, samplesPerBuffer,phase);
                         break;
                     case WaveformType.SquareWave:
                         _data = GenerateSquareWave(_resultingFrequency, amplitude, _resultingSampleClockRate, samplesPerBuffer);
@@ -133,7 +138,9 @@ namespace FGWriter.Classes
                 double frequency,
                 double amplitude,
                 double sampleClockRate,
-                double samplesPerBuffer)
+                double samplesPerBuffer,
+                int phase
+                )
             {
                 double deltaT = 1 / sampleClockRate; // sec./samp
                 int intSamplesPerBuffer = (int)samplesPerBuffer;
@@ -141,7 +148,7 @@ namespace FGWriter.Classes
                 double[] rVal = new double[intSamplesPerBuffer];
 
                 for (int i = 0; i < intSamplesPerBuffer; i++)
-                    rVal[i] = amplitude * Math.Sin(2.0 * Math.PI * frequency * (i * deltaT));
+                    rVal[i] = amplitude * Math.Sin((2.0 * Math.PI * frequency * (i * deltaT)) + phase);
 
 
                 return rVal;
